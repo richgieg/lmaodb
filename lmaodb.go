@@ -132,7 +132,7 @@ func GetRecords(slice interface{}) error {
 func InitModel(dummyRecord interface{}) error {
 	model := getType(dummyRecord)
 	dir := getModelDir(model)
-	err := os.MkdirAll(dir, 0600)
+	err := os.MkdirAll(dir, 0700)
 	if err != nil {
 		return err
 	}
