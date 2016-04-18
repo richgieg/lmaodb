@@ -140,10 +140,35 @@ func InitModel(dummyRecord interface{}) error {
 	_, err = os.Stat(idFilePath)
 	if err != nil && os.IsNotExist(err) {
 		err = ioutil.WriteFile(idFilePath, []byte("1"), 0600)
-		if err != nil {
-			return err
+	}
+	return err
+}
+
+func QueryRecords(slice interface{}, field string, value interface{}) error {
+	err := GetRecords(slice)
+	if err != nil {
+		return err
+	}
+	sliceVal := reflect.Indirect(reflect.ValueOf(slice))
+	len := sliceVal.Len()
+	newSliceVal := reflect.MakeSlice(sliceVal.Type(), 0, 0)
+	for i := 0; i < len; i++ {
+		record := sliceVal.Index(i)
+		fvalue := record.FieldByName(field)
+		eq := false
+		switch fvalue.Interface().(type) {
+		case int:
+			eq = int(fvalue.Int()) == value.(int)
+		case int64:
+			eq = fvalue.Int() == value.(int64)
+		case string:
+			eq = fvalue.String() == value.(string)
+		}
+		if eq {
+			newSliceVal = reflect.Append(newSliceVal, record)
 		}
 	}
+	sliceVal.Set(newSliceVal)
 	return nil
 }
 
