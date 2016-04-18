@@ -102,7 +102,10 @@ func GetRecord(id int64, record interface{}) error {
 		return err
 	}
 	if len(data) == 0 {
-		msg := fmt.Sprintf("lmaodb: record %d in table %s no longer exists!", id, model)
+		msg := fmt.Sprintf(
+			"lmaodb: record %d in table %s no longer exists!",
+			id, model,
+		)
 		return errors.New(msg)
 	}
 	return json.Unmarshal(data, ptrVal.Interface())
