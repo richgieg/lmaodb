@@ -36,6 +36,15 @@ func PutPosts(posts []Post) error {
 	return lmaodb.PutRecords(posts)
 }
 
+func QueryPosts(field string, value interface{}) ([]Post, error) {
+	posts := []Post{}
+	err := lmaodb.QueryRecords(&posts, field, value)
+	if err != nil {
+		return nil, err
+	}
+	return posts, nil
+}
+
 func (p *Post) Delete() error {
 	return lmaodb.DeleteRecord(p)
 }

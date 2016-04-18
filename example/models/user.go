@@ -34,6 +34,15 @@ func GetUsers() ([]User, error) {
 	return users, nil
 }
 
+func QueryUsers(field string, value interface{}) ([]User, error) {
+	users := []User{}
+	err := lmaodb.QueryRecords(&users, field, value)
+	if err != nil {
+		return nil, err
+	}
+	return users, nil
+}
+
 func PutUsers(users []User) error {
 	return lmaodb.PutRecords(users)
 }

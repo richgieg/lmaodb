@@ -23,6 +23,7 @@ func main() {
 
 	fmt.Println(models.GetUsers())
 	fmt.Println(models.GetPosts())
+	fmt.Println(models.QueryPosts("Text", "Hello, world!"))
 
 	p.Text = "Goodbye, world!"
 	p.Put()
@@ -30,4 +31,16 @@ func main() {
 
 	p.Delete()
 	fmt.Println(models.GetPosts())
+
+	u = models.User{
+		FirstName: "Sarah",
+		LastName:  "Smith",
+		UserName:  "ssmith",
+		Age:       40,
+	}
+	u.Put()
+
+	fmt.Println(models.QueryUsers("FirstName", "Fred"))
+	fmt.Println(models.QueryUsers("Age", 40))
+	fmt.Println(models.QueryUsers("ID", int64(1)))
 }
