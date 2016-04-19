@@ -8,6 +8,7 @@ import (
 	"os"
 	"path"
 	"reflect"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -220,4 +221,13 @@ func PutRecords(slice interface{}) error {
 		}
 	}
 	return nil
+}
+
+func Sort(slice interface{}, field string, desc bool) {
+	s := newSortable(slice, field)
+	if desc {
+		sort.Sort(sort.Reverse(s))
+	} else {
+		sort.Sort(s)
+	}
 }
