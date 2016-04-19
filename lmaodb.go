@@ -158,17 +158,8 @@ func QueryRecords(slice interface{}, field string, value interface{}) error {
 	newSliceVal := reflect.MakeSlice(sliceVal.Type(), 0, 0)
 	for i := 0; i < len; i++ {
 		record := sliceVal.Index(i)
-		fvalue := record.FieldByName(field)
-		eq := false
-		switch fvalue.Interface().(type) {
-		case int:
-			eq = int(fvalue.Int()) == value.(int)
-		case int64:
-			eq = fvalue.Int() == value.(int64)
-		case string:
-			eq = fvalue.String() == value.(string)
-		}
-		if eq {
+		fieldValue := record.FieldByName(field).Interface()
+		if fieldValue == value {
 			newSliceVal = reflect.Append(newSliceVal, record)
 		}
 	}
