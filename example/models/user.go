@@ -47,6 +47,10 @@ func PutUsers(users []User) error {
 	return lmaodb.PutRecords(users)
 }
 
+func SortUsers(users []User, field string, desc bool) {
+	lmaodb.Sort(users, field, desc)
+}
+
 func (u *User) Delete() error {
 	return lmaodb.DeleteRecord(u)
 }

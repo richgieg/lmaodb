@@ -45,6 +45,10 @@ func QueryPosts(field string, value interface{}) ([]Post, error) {
 	return posts, nil
 }
 
+func SortPosts(posts []Post, field string, desc bool) {
+	lmaodb.Sort(posts, field, desc)
+}
+
 func (p *Post) Delete() error {
 	return lmaodb.DeleteRecord(p)
 }
